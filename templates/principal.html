@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>AppSelection</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.2.8/d3.min.js"></script>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" integrity="sha384-feJI7QwhOS+hwpX2zkaeJQjeiwlhOP+SdQDqhgvvo1DsjtiSQByFdThsxO669S2D" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/javascript.util/0.12.12/javascript.util.min.js"></script>
+    <script src="https://files.codepedia.info/files/uploads/iScripts/html2canvas.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.71/jquery.csv-0.71.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+    <!--<script src="../static/js/action.js"></script>-->
+    <script src="{{ url_for('static', filename='js/action.js') }}"></script>
+    <!--<script src="{{ url_for('static', filename='js/Chart.min.js') }}"></script>-->
+    <!--<script src="{{ url_for('static', filename='js/graficar.js') }}"></script>-->
+    <script src="{{ url_for('static', filename='js/sweetalert.min.js') }}"></script>
+    <script src="http://www.dukelearntoprogram.com/course1/common/js/image/SimpleImage.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+    <!--<link rel="stylesheet" href="../static/css/estilos.css">-->
+  </head>
+
+
+
+  <body>
+    <header>
+      <div class="container">
+        <!--<div class="row">
+          <img src="../static/images/fondoappmineria.png" alt="header not found" class="img-fluid">
+        </div>-->
+        <section class="row">
+          <div class="col-md-3 text-center">
+            <img id="lgF" src="../static/images/Escudo_UD.png" alt="img " class="img-fluid">
+          </div>
+          <div class="col-md-6 text-center">
+            <!--<img id="caron" src="{{ url_for('static', filename='images/logoProducto.png') }}" alt="img caron" class="img-fluid">-->
+            <!--<img id="caron" src="../static/images/logoapp.png" alt="img caron" class="img-fluid">-->
+            <h1 class="text-center" id = 'tituloapp' >App-EntropySelection</h1>
+          </div>
+          <div class="col-md-3 text-center">
+            <!--<img id="lgF" src="{{ url_for('static', filename='images/Escudo_UD.png') }}" alt="img " class="img-fluid">-->
+            <img id="lgF" src="../static/images/Escudo_UD.png" alt="img " class="img-fluid">
+          </div>
+        </section>
+      </div>
+    </header>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Home</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="manuales">Manuals <span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+
+    <br><br><br>
+
+   <div class="container-fluid" id = 'load_zone'>
+      <div class="row text-center">
+        <div class="col-md-2">
+          <span></span>
+        </div>
+        <div class="col-md-8">
+          <h3 class="text-center">Cargar Conjunto de Datos</h3>
+          <hr/>
+          <br>
+          <p class="text-center">Esta sección tiene como propósito, permitir la carga del conjunto de datos deseado.</p>
+          <p class="text-center"><strong>Nota:</strong> El archivo de carga debe ser de extensión <strong>.arff</strong></p>
+          <hr/>
+        </div>
+        <div class="col-md-2">
+          <span></span>
+        </div>
+      </div>
+      <div class="row text-center">
+        <div class="col-md-3">
+          <span></span>
+        </div>
+        <div class="col-md-6">
+          <div class="card bg-light border-secondary mb-3">
+            <div class="card-body">
+              <form id="upload-file" method="post" enctype="multipart/form-data">
+                    <div class="form-group files">
+                      <input id="files" type="file" class="form-control" name='file' enctype='multipart/form-data'>
+                    </div>
+                </form>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-md-3">
+          <span></span>
+        </div>
+      </div>
+      <br>
+      <div class="row text-center">
+        <div class="col-md-12 text-center">
+            <button type="button" class="btn btn-info text-center" id="button_load">Cargar</button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="container" id = 'overview_zone'>
+       <div class="row text-center">
+         <div class="col-md-12">
+           <h3 class="text-center">Overview</h3>
+           <hr/>
+           <br>
+           <p class="text-center">Esta sección expone el conjunto de datos cargado, la cantidad de registros por atributo y el tipo de cada uno de estos</p>
+           <hr/>
+         </div>
+       </div>
+       <div class="row text-center">
+         <div class="col-md-12">
+           <div class="card bg-light border-secondary mb-3">
+             <div class="card-body">
+               <div id='head_data' class=table-responsive>
+                 <table id="example" class='table table-bordered' width="100%"></table>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+       <br>
+       <div class="row text-center">
+         <div class="col-md-6">
+           <div class="row text-center">
+             <div class="col-md-12">
+               <h3 class="text-center">Cantidad de registros</h3>
+               <hr/>
+             </div>
+           </div>
+           <div class="row text-center">
+             <div class="col-md-12">
+               <div class="card bg-light border-secondary mb-3">
+                 <div class="card-body">
+                   <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+                     <table class="table table-bordered">
+                       <thead class="thead-light">
+                        <tr>
+                          <th>Atributo</th>
+                          <th>Registros</th>
+                        </tr>
+                      </thead>
+                       <tbody id=counter_data>
+                       </tbody>
+                    </table>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+         <div class="col-md-6">
+           <div class="row text-center">
+             <div class="col-md-12">
+               <h3 class="text-center">Tipos de atributos</h3>
+               <hr/>
+             </div>
+           </div>
+           <div class="row text-center">
+             <div class="col-md-12">
+               <div class="card bg-light border-secondary mb-3">
+                 <div class="card-body">
+                   <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+                     <table class="table table-bordered">
+                       <thead class="thead-light">
+                        <tr>
+                          <th>Atributo</th>
+                          <th>Tipo</th>
+                        </tr>
+                      </thead>
+                       <tbody id=type_data>
+                       </tbody>
+                    </table>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
+          </div>
+       </div>
+       <br>
+       <div class="row text-center">
+         <div class="col-md-3">
+           <span></span>
+         </div>
+         <div class="col-md-6">
+           <div class="row text-center">
+             <div class="col-md-12">
+               <h3 class="text-center">Acciones a tomar</h3>
+               <hr/>
+             </div>
+           </div>
+           <div class="card bg-light border-secondary mb-3">
+             <div class="card-body">
+               <div class="row text-center">
+                 <div class="col-md-12" id="criterio_zone">
+
+                 </div>
+               </div>
+               <br>
+               <div class="row text-center">
+                 <div class="col-md-12">
+                   <button type="button" class="btn btn-info text-center" id="button_send">Aplicar Selección</button>
+                 </div>
+              </div>
+             </div>
+           </div>
+         </div>
+         <div class="col-md-3">
+           <span></span>
+         </div>
+       </div>
+    </div>
+
+    <div class="container" id = 'results_zone'>
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h3 class="text-center">Proceso</h3>
+          <hr/>
+          <br>
+          <p class="text-center">Esta sección tiene como objetivo presentar un resumen detallado de todo el proceso realizado al aplicar la selección de atributos por entropía</p>
+          <hr/>
+        </div>
+      </div>
+      <div class="row text-center">
+        <div class="col-md-12 text-center">
+          <div class="card bg-light border-secondary mb-3">
+            <div class="card-body">
+              <div id='process_area' class='text-center'>
+                <textarea class="form-control" rows="10" id="process_textarea"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row text-center">
+        <div class="col-md-6">
+          <div class="row text-center">
+            <div class="col-md-12">
+              <h3 class="text-center">Resultados</h3>
+              <hr/>
+            </div>
+          </div>
+          <div class="row text-center">
+            <div class="col-md-12">
+              <div class="card bg-light border-secondary mb-3">
+                <div class="card-body">
+                  <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+                    <table id="results_table" class='table table-bordered' width="100%">
+                      <!--<thead>
+                        <tr>
+                            <th>Atributos</th>
+                            <th>Entropía</th>
+                            <th>Diferencia</th>
+                        </tr>
+                    </thead>-->
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row text-center">
+            <div class="col-md-12">
+              <h3 class="text-center">Sugerencia</h3>
+              <hr/>
+            </div>
+          </div>
+          <div class="row text-center">
+            <div class="col-md-12">
+              <div class="card bg-light border-secondary mb-3">
+                <div class="card-body">
+                  <div id='suggestion'>
+                    <textarea class="form-control" rows="5" id="suggestion_textarea"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br><br><br>
+
+    <div id="contact">Contact</div>
+        <div id="contactForm">
+          <h1>Por favor espere un momento</h1>
+          <h1>Se están procesando los datos</h1>
+          <img id="loadingGIF" src="{{ url_for('static', filename='images/load-image.gif') }}" alt="img caron" class="img-responsive img-fluid center-block" height="200" width="200">
+          <br>
+          <h5 text-align="center">Este proceso puede tomar algunos minutos, dependiendo del tamaño del conjunto de datos</h5>
+    </div>
+
+
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12 card text-white bg-dark" id="zonCopyRight">
+          <div class="card-body">
+            <p class="card-text" align="center">Maddyzeth Ariza & Andrés Restrepo <i class="fa fa-copyright" aria-hidden="true"></i> 2020-2021</p>
+            <p class="card-text" align="center">Minería de datos</p>
+            <p class="card-text" align="center">Maestría en Ciencias de la Información y las Comunicaciones</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+  </body>
+
+</html>
